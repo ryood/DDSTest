@@ -9,7 +9,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DDSTest16bit", "DDSTest16bi
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DDSTest-12bitTable", "DDSTest-12bitTable\DDSTest-12bitTable.vcxproj", "{78571A89-84EB-49DA-85B2-24CB8BD417A9}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DDSTest16bit-12bitTable.cpp", "DDSTest16bit-12bitTable.cpp\DDSTest16bit-12bitTable.cpp.vcxproj", "{84DFEBE0-F956-41AB-BE61-1CDFD7B07C2F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DDSTest16bit-12bitTable", "DDSTest16bit-12bitTable.cpp\DDSTest16bit-12bitTable.cpp.vcxproj", "{84DFEBE0-F956-41AB-BE61-1CDFD7B07C2F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DDSTest-LFO", "DDSTest-LFO\DDSTest-LFO.vcxproj", "{3838BC47-C993-484B-A3A9-B19FE61E5916}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{84DFEBE0-F956-41AB-BE61-1CDFD7B07C2F}.Debug|Win32.Build.0 = Debug|Win32
 		{84DFEBE0-F956-41AB-BE61-1CDFD7B07C2F}.Release|Win32.ActiveCfg = Release|Win32
 		{84DFEBE0-F956-41AB-BE61-1CDFD7B07C2F}.Release|Win32.Build.0 = Release|Win32
+		{3838BC47-C993-484B-A3A9-B19FE61E5916}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3838BC47-C993-484B-A3A9-B19FE61E5916}.Debug|Win32.Build.0 = Debug|Win32
+		{3838BC47-C993-484B-A3A9-B19FE61E5916}.Release|Win32.ActiveCfg = Release|Win32
+		{3838BC47-C993-484B-A3A9-B19FE61E5916}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
