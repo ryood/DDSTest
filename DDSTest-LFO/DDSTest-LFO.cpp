@@ -23,11 +23,11 @@ int16_t  waveValue;
 
 uint16_t lfoPhaseRegister;
 uint16_t lfoTuningWord;
-uint8_t  lfoAmount = 255;
+uint8_t  lfoAmount = 200;
 
 // frequency > SAMPLE_CLOCK / 2^16 (about 0.67Hz)
 double frequency = 440.0;
-double lfoFrequency = 1.5;
+double lfoFrequency = 1;
 
 int period = 30 * SAMPLE_CLOCK;
 
@@ -69,8 +69,8 @@ int _tmain(int argc, _TCHAR* argv[])
 		lfoValue = (((int32_t)lookupTable[lfoIndex]) - 2048) * lfoAmount >> 4;
 		//printf("lfoValue: %d ->\t", lfoValue);
 
-		// tuningWord(16bit) * lfoValue(16bit) : 32bit -> 16bit
-		lfoValue = (((int32_t)tuningWord) * lfoValue) >> 16;
+		// tuningWord(16bit) * lfoValue(15bit + 1bit) : (31bit + 1bit) -> 16bit
+		lfoValue = (((int32_t)tuningWord) * lfoValue) >> 15;
 		//printf("%d\n", lfoValue);
 
 		phaseRegister += tuningWord + lfoValue;
