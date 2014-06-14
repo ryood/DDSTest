@@ -13,6 +13,7 @@ lfoAmount		: 8bit
 **********************************************************/
 
 #define SAMPLE_CLOCK	44100	// 44.1kHz
+#define LFO_CLOCK		4410	// 4.41kHz
 #define TABLE_SIZE	    0x0400  // Lookup Table Size = 1024
 
 uint16_t *lookupTable;
@@ -23,11 +24,11 @@ int16_t  waveValue;
 
 uint16_t lfoPhaseRegister;
 uint16_t lfoTuningWord;
-uint8_t  lfoAmount = 200;
+uint8_t  lfoAmount = 255;
 
 // frequency > SAMPLE_CLOCK / 2^16 (about 0.67Hz)
 double frequency = 440.0;
-double lfoFrequency = 1;
+double lfoFrequency = 10;
 
 int period = 30 * SAMPLE_CLOCK;
 
@@ -45,7 +46,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 	//printf("\n*********************\n\n");
 
-	lfoTuningWord = lfoFrequency * pow(2.0, 16) / SAMPLE_CLOCK;
+	lfoTuningWord = lfoFrequency * pow(2.0, 16) / LFO_CLOCK;
 	//printf("lfoTuningWord: %d\n", lfoTuningWord);
 
 	tuningWord = frequency * pow(2.0, 16) / SAMPLE_CLOCK;
@@ -53,25 +54,30 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	phaseRegister = 0x0000;
 	lfoPhaseRegister = 0x0000;
+
 	for (int i = 0; i < period; i++) {
 		uint16_t index;
 		uint16_t lfoIndex;
-		int16_t  lfoValue;
+		int16_t  lfoValue = 0;
 		int16_t  waveValue;
 
-		lfoPhaseRegister += lfoTuningWord;
-		//printf("lfoPhaseRegister: %d\n", lfoPhaseRegister);
+		if (i % (SAMPLE_CLOCK / LFO_CLOCK) == 0) {
 
-		lfoIndex = lfoPhaseRegister >> 6;
-		//printf("lfoIndex: %d\n", lfoIndex);
+			lfoPhaseRegister += lfoTuningWord;
+			//printf("lfoPhaseRegister: %d\n", lfoPhaseRegister);
 
-		// lookupTable(12bit) * lfoAmount(8bit) : 20bit -> 16bit
-		lfoValue = (((int32_t)lookupTable[lfoIndex]) - 2048) * lfoAmount >> 4;
-		//printf("lfoValue: %d ->\t", lfoValue);
+			lfoIndex = lfoPhaseRegister >> 6;
+			//printf("lfoIndex: %d\n", lfoIndex);
 
-		// tuningWord(16bit) * lfoValue(15bit + 1bit) : (31bit + 1bit) -> 16bit
-		lfoValue = (((int32_t)tuningWord) * lfoValue) >> 15;
-		//printf("%d\n", lfoValue);
+			// lookupTable(12bit) * lfoAmount(8bit) : 20bit -> 16bit
+			lfoValue = (((int32_t)lookupTable[lfoIndex]) - 2048) * lfoAmount >> 4;
+			//printf("lfoValue: %d ->\t", lfoValue);
+
+			// tuningWord(16bit) * lfoValue(15bit + 1bit) : (31bit + 1bit) -> 16bit
+			lfoValue = (((int32_t)tuningWord) * lfoValue) >> 15;
+			//printf("%d\n", lfoValue);
+		
+		}
 
 		phaseRegister += tuningWord + lfoValue;
 		//printf("phaseRegister: %d\n", phaseRegister);
