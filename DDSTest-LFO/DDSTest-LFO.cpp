@@ -32,7 +32,7 @@ uint8_t  lfoAmount = 255;
 double frequency = 440.0;
 double lfoFrequency =0.5;
 
-int period = 30 * SAMPLE_CLOCK;
+int period = 10 * SAMPLE_CLOCK;
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -77,7 +77,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 			// tuningWord(16bit) * lfoValue(15bit + 1bit) : (31bit + 1bit) -> 16bit
 			lfoValue = (((int32_t)tuningWord) * lfoValue) >> 15;
-			//printf("%d\n", lfoValue);
+			printf("%d\n", lfoValue);
 		
 		}
 
@@ -91,7 +91,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		//printf("%d\n", waveValue);
 
 		// 16bit長の raw データとして出力
-		fwrite(&waveValue, sizeof(waveValue), 1, stdout);
+		//fwrite(&waveValue, sizeof(waveValue), 1, stdout);
 	}
 
 	free(lookupTable);
