@@ -10,10 +10,12 @@ lookupTable     : 16bit (use 12bit)
 
 Phase Modulation LFO
 lfoAmount		: 8bit
+
+Sampling Rate   : 15625Hz
 **********************************************************/
 
-#define SAMPLE_CLOCK	44100	// 44.1kHz
-#define LFO_CLOCK		4410	// 4.41kHz
+#define SAMPLE_CLOCK	15625	// 15.625kHz
+#define LFO_CLOCK		3125	// 3.125kHz
 #define TABLE_SIZE	    0x0400  // Lookup Table Size = 1024
 
 uint16_t *lookupTable;
@@ -26,7 +28,7 @@ uint16_t lfoPhaseRegister;
 uint16_t lfoTuningWord;
 uint8_t  lfoAmount = 255;
 
-// frequency > SAMPLE_CLOCK / 2^16 (about 0.67Hz)
+// frequency > SAMPLE_CLOCK / 2^16
 double frequency = 440.0;
 double lfoFrequency =0.5;
 

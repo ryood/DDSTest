@@ -80,13 +80,13 @@ int _tmain(int argc, _TCHAR* argv[])
 		}
 
 		phaseRegister += tuningWord + lfoValue;
-		//printf("phaseRegister: %d\n", phaseRegister);
+		printf("phaseRegister: %d\n", phaseRegister);
 
 		index = phaseRegister >> 6;
-		//printf("index: %d\n", index);
+		printf("index: %d\n", index);
 
 		waveValue = (lookupTable[index] << 4) - 0x8000;
-		//printf("%d\n", waveValue);
+		printf("%d\n", waveValue);
 
 		// 16bit長の raw データとして出力
 		//fwrite(&waveValue, sizeof(waveValue), 1, stdout);
