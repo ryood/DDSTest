@@ -12,8 +12,8 @@ Phase Modulation LFO
 lfoAmount		: 8bit
 **********************************************************/
 
-#define SAMPLE_CLOCK	44100	// 44.1kHz
-#define LFO_CLOCK		4410	// 4.41kHz
+#define SAMPLE_CLOCK	15625
+#define LFO_CLOCK		3125
 #define TABLE_SIZE	    0x0400  // Lookup Table Size = 1024
 
 uint16_t *lookupTable;
@@ -28,7 +28,7 @@ uint8_t  lfoAmount = 255;
 
 // frequency > SAMPLE_CLOCK / 2^16 (about 0.67Hz)
 double frequency = 440.0;
-double lfoFrequency =0.5;
+double lfoFrequency = 0.1;
 
 int period = 30 * SAMPLE_CLOCK;
 
@@ -58,7 +58,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	for (int i = 0; i < period; i++) {
 		uint16_t index;
 		uint16_t lfoIndex;
-		int16_t  lfoValue = 0;
+		uint16_t lfoValue = 0;
 		int16_t  waveValue;
 
 		if (i % (SAMPLE_CLOCK / LFO_CLOCK) == 0) {
@@ -70,12 +70,12 @@ int _tmain(int argc, _TCHAR* argv[])
 			//printf("lfoIndex: %d\n", lfoIndex);
 
 			// lookupTable(12bit) * lfoAmount(8bit) : 20bit -> 16bit
-			lfoValue = (((int32_t)lookupTable[lfoIndex]) - 2048) * lfoAmount >> 4;
+			lfoValue = (uint32_t)lookupTable[lfoIndex] * lfoAmount >> 4;
 			//printf("lfoValue: %d ->\t", lfoValue);
 
-			// tuningWord(16bit) * lfoValue(15bit + 1bit) : (31bit + 1bit) -> 16bit
-			lfoValue = (((int32_t)tuningWord) * lfoValue) >> 15;
-			//printf("%d\n", lfoValue);
+			// (lfoValue + tuningWord) into 16bit depth
+			lfoValue = ((uint32_t)lfoValue * (0x10000 - tuningWord)) >> 16;
+			//printf("%u\n", lfoValue);
 		
 		}
 
