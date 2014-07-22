@@ -24,11 +24,11 @@ int16_t  waveValue;
 
 uint16_t lfoPhaseRegister;
 uint16_t lfoTuningWord;
-uint8_t  lfoAmount = 255;
+uint8_t  lfoAmount = 128;
 
 // frequency > SAMPLE_CLOCK / 2^16 (about 0.67Hz)
 double frequency = 440.0;
-double lfoFrequency = 0.1;
+double lfoFrequency = 0.5;
 
 int period = 30 * SAMPLE_CLOCK;
 
